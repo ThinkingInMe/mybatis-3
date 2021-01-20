@@ -100,6 +100,9 @@ public class XMLConfigBuilder extends BaseBuilder {
     return configuration;
   }
 
+  /**
+   * 解析mybatis的config文件
+   */
   private void parseConfiguration(XNode root) {
     try {
       // issue #117 read properties first
@@ -107,16 +110,21 @@ public class XMLConfigBuilder extends BaseBuilder {
       Properties settings = settingsAsProperties(root.evalNode("settings"));
       loadCustomVfs(settings);
       loadCustomLogImpl(settings);
+      //别名
       typeAliasesElement(root.evalNode("typeAliases"));
+      //插件
       pluginElement(root.evalNode("plugins"));
       objectFactoryElement(root.evalNode("objectFactory"));
       objectWrapperFactoryElement(root.evalNode("objectWrapperFactory"));
       reflectorFactoryElement(root.evalNode("reflectorFactory"));
       settingsElement(settings);
       // read it after objectFactory and objectWrapperFactory issue #631
+      //环境变量,数据源信息
       environmentsElement(root.evalNode("environments"));
       databaseIdProviderElement(root.evalNode("databaseIdProvider"));
+      //解析typeHandler
       typeHandlerElement(root.evalNode("typeHandlers"));
+      //解析mapper
       mapperElement(root.evalNode("mappers"));
     } catch (Exception e) {
       throw new BuilderException("Error parsing SQL Mapper Configuration. Cause: " + e, e);

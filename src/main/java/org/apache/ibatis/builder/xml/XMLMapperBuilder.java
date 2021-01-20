@@ -90,10 +90,16 @@ public class XMLMapperBuilder extends BaseBuilder {
     this.resource = resource;
   }
 
+  /**
+   * 解析mapper信息
+   */
   public void parse() {
     if (!configuration.isResourceLoaded(resource)) {
+      //解析resultMap等信息
       configurationElement(parser.evalNode("/mapper"));
       configuration.addLoadedResource(resource);
+
+      //将解析好的mapper信息交给configuration保存
       bindMapperForNamespace();
     }
 
@@ -106,6 +112,10 @@ public class XMLMapperBuilder extends BaseBuilder {
     return sqlFragments.get(refid);
   }
 
+  /**
+   * 解析*Mapper.xml文件
+   * @param context
+   */
   private void configurationElement(XNode context) {
     try {
       String namespace = context.getStringAttribute("namespace");
@@ -416,6 +426,7 @@ public class XMLMapperBuilder extends BaseBuilder {
   }
 
   private void bindMapperForNamespace() {
+    //获取当前的namespace
     String namespace = builderAssistant.getCurrentNamespace();
     if (namespace != null) {
       Class<?> boundType = null;

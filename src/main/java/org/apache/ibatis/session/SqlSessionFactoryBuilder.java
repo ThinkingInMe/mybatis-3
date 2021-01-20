@@ -44,6 +44,9 @@ public class SqlSessionFactoryBuilder {
     return build(reader, null, properties);
   }
 
+  /**
+   * 构造sqlSession时完成xml的解析
+   */
   public SqlSessionFactory build(Reader reader, String environment, Properties properties) {
     try {
       XMLConfigBuilder parser = new XMLConfigBuilder(reader, environment, properties);

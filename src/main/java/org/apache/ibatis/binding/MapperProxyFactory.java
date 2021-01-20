@@ -43,6 +43,10 @@ public class MapperProxyFactory<T> {
     return methodCache;
   }
 
+  /**
+   * jdk反向代理
+   * @param mapperProxy 代理类的触发类
+   */
   @SuppressWarnings("unchecked")
   protected T newInstance(MapperProxy<T> mapperProxy) {
     return (T) Proxy.newProxyInstance(mapperInterface.getClassLoader(), new Class[] { mapperInterface }, mapperProxy);
